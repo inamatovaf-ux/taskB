@@ -1,0 +1,50 @@
+<div style="background:#f9f9f9; padding:20px; margin:20px 0; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+  <h2 style="font-family:Arial, sans-serif; color:#333; margin-bottom:15px;">Task 2: Reduced or Not Reduced?</h2>
+  <p style="font-family:Arial, sans-serif; color:#555; margin-bottom:20px;">
+    Determine whether each quadratic equation is <b>reduced</b> (b = 0) or <b>not reduced</b>.
+  </p>
+
+  <div style="margin-bottom:15px; padding:15px; background:#fff; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+    <p style="font-family:Arial, sans-serif; font-size:16px; color:#222;">1) x² + 5x + 6 = 0</p>
+    <select id="q1" style="padding:8px; border-radius:6px; border:1px solid #ccc; font-family:Arial, sans-serif;">
+      <option value="">-- Select --</option>
+      <option value="reduced">Reduced</option>
+      <option value="not">Not Reduced</option>
+    </select>
+  </div>
+
+  <div style="margin-bottom:15px; padding:15px; background:#fff; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+    <p style="font-family:Arial, sans-serif; font-size:16px; color:#222;">2) x² - 9 = 0</p>
+    <select id="q2" style="padding:8px; border-radius:6px; border:1px solid #ccc; font-family:Arial, sans-serif;">
+      <option value="">-- Select --</option>
+      <option value="reduced">Reduced</option>
+      <option value="not">Not Reduced</option>
+    </select>
+  </div>
+
+  <div style="margin-bottom:15px; padding:15px; background:#fff; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+    <p style="font-family:Arial, sans-serif; font-size:16px; color:#222;">3) 2x² - 7x + 3 = 0</p>
+    <select id="q3" style="padding:8px; border-radius:6px; border:1px solid #ccc; font-family:Arial, sans-serif;">
+      <option value="">-- Select --</option>
+      <option value="reduced">Reduced</option>
+      <option value="not">Not Reduced</option>
+    </select>
+  </div>
+
+  <button onclick="checkTask2()" style="padding:10px 20px; background:#4CAF50; color:white; border:none; border-radius:8px; font-family:Arial, sans-serif; cursor:pointer;">
+    Check Answers
+  </button>
+
+  <p id="result2" style="font-family:Arial, sans-serif; margin-top:15px; font-size:16px; color:#333;"></p>
+</div>
+
+<script>
+  function checkTask2() {
+    let score = 0;
+    if (document.getElementById("q1").value === "not") score++;
+    if (document.getElementById("q2").value === "reduced") score++;
+    if (document.getElementById("q3").value === "not") score++;
+
+    document.getElementById("result2").innerText = "You got " + score + " out of 3 correct.";
+  }
+</script>
