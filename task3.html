@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task C — Incomplete Quadratics</title>
+</head>
+<body style="margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:#F0F4F8;color:#2E3440;min-height:100vh;display:flex;justify-content:center;align-items:center;">
+
+<div style="max-width:600px;width:90%;background:#ffffff;border-radius:16px;padding:24px;box-shadow:0 10px 28px rgba(0,0,0,0.12);text-align:center;">
+  <h2 style="margin-top:0;color:#2E3440;">Task C — Incomplete Quadratic Equations</h2>
+  <p style="color:#3B4252;font-size:16px;">Drag the quadratic equation into the basket if it is <strong>incomplete</strong> (missing b and/or c).</p>
+
+  <div id="basket" style="margin:20px auto 30px;width:150px;height:150px;border-radius:16px;background:#A3D9A5;display:flex;justify-content:center;align-items:center;font-weight:700;color:#2E3440;font-size:18px;position:relative;">
+    <span>Basket</span>
+  </div>
+
+  <div id="equations" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+    <div class="eq" draggable="true" style="background:#3B4252;color:#F0F4F8;padding:12px 16px;border-radius:12px;cursor:grab;user-select:none;">x² + 5x + 6 = 0</div>
+    <div class="eq" draggable="true" style="background:#3B4252;color:#F0F4F8;padding:12px 16px;border-radius:12px;cursor:grab;user-select:none;">2x² = 0</div>
+    <div class="eq" draggable="true" style="background:#3B4252;color:#F0F4F8;padding:12px 16px;border-radius:12px;cursor:grab;user-select:none;">x² + 4 = 0</div>
+    <div class="eq" draggable="true" style="background:#3B4252;color:#F0F4F8;padding:12px 16px;border-radius:12px;cursor:grab;user-select:none;">x² + x = 0</div>
+  </div>
+
+  <div id="feedback" style="margin-top:20px;color:#2E3440;font-weight:600;font-size:16px;"></div>
+</div>
+
+<script>
+const basket = document.getElementById('basket');
+const feedback = document.getElementById('feedback');
+const correctEquations = ['2x² = 0','x² + 4 = 0','x² + x = 0'];
+
+document.querySelectorAll('.eq').forEach(eq=>{
+  eq.addEventListener('dragstart', e=>{
+    e.dataTransfer.setData('text/plain', eq.textContent);
+  });
+});
+
+basket.addEventListener('dragover', e=>{
+  e.preventDefault();
+});
+
+basket.addEventListener('drop', e=>{
+  e.preventDefault();
+  const eq = e.dataTransfer.getData('text/plain');
+  if(correctEquations.includes(eq)){
+    feedback.textContent = "Correct!";
+    basket.style.background = "#A3D9A5";
+    triggerConfetti();
+  } else {
+    feedback.textContent = "Not incomplete!";
+    basket.style.background = "#F28B82"; // vibrate effect
+    basket.animate([
+      { transform: 'translateX(0px)' },
+      { transform: 'translateX(-10px)' },
+      { transform: 'translateX(10px)' },
+      { transform: 'translateX(0px)' }
+    ], { duration: 500, iterations: 3 });
+    setTimeout(()=>{ basket.style.background = "#A3D9A5"; }, 600);
+  }
+});
+
+// Confetti animation for correct answer
+function triggerConfetti(){
+  const confettiColors = ['#A3D9A5','#81A1C1','#EBCB8B','#D08770'];
+  const duration = 5000; // 5 seconds
+  const container = document.createElement('div');
+  container.style.position = 'absolute';
+  container.style.top = '0';
+  container.style.left = '0';
+  container.style.width = '100%';
+  container.style.height = '100%';
+  container.style.pointerEvents = 'none';
+  basket.appendChild(container);
+
+  const interval = setInterval(()=>{
+    const dot = document.createElement('div');
+    dot.style.position = 'absolute';
+    dot.style.width = '8px';
+    dot.style.height = '8px';
+    dot.style.borderRadius = '50%';
+    dot.style.backgroundColor = confettiColors[Math.floor(Math.random()*confettiColors.length)];
+    dot.style.left = Math.random()*150 + 'px';
+    dot.style.top = '0px';
+    dot.style.opacity = 1;
+    container.appendChild(dot);
+
+    dot.animate([
+      { transform: 'translateY(0px)', opacity: 1 },
+      { transform: 'translateY(150px)', opacity: 0 }
+    ], { duration: 2000, easing: 'ease-out' });
+
+    setTimeout(()=>{ container.removeChild(dot); }, 2000);
+  }, 150);
+
+  setTimeout(()=>{ clearInterval(interval); basket.removeChild(container); }, duration);
+}
+</script>
+
+</body>
+</html>
