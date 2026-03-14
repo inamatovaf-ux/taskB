@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тригонометрические уравнения | 10 класс</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0f4ff;
+  --card: #ffffff;
+  --border: #dde5f5;
+  --text: #1a2340;
+  --muted: #6b7a99;
+  --sin: #d9174d;
+  --cos: #1666e0;
+  --tan: #c47a00;
+  --cot: #0a7c52;
+  --purple: #6d28d9;
+  --accent: #4338ca;
+  --green: #047857;
+  --red: #b91c1c;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Mulish',sans-serif; background:var(--bg); color:var(--text); }
+
+/* ── SLIDE LAYOUT: each section = 16:9 presentation slide ── */
+.slide {
+  width: 100%;
+  max-width: 1280px;
+  min-height: 720px;
+  margin: 0 auto 32px;
+  background: var(--card);
+  border-radius: 20px;
+  box-shadow: 0 4px 40px rgba(26,35,64,0.13);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.slide-hero {
+  background: linear-gradient(135deg, #1a2340 0%, #253470 60%, #1a2340 100%);
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 40px;
+}
+.slide-top {
+  padding: 28px 44px 20px;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+.slide-body {
+  display: grid;
+  grid-template-columns: 370px 1fr;
+  flex: 1;
+  min-height: 0;
+}
+.slide-body.full { grid-template-columns: 1fr; }
+.slide-body.thirds { grid-template-columns: 1fr 1fr 1fr; }
+.col-left {
+  border-right: 2px solid var(--border);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  background: #f7f9ff;
+}
+.col-right { padding: 28px 36px; overflow: auto; }
+.col-card { padding: 24px; border-right: 2px solid var(--border); }
+
+/* Nav */
+.nav-bar {
+  background: #1a2340;
+  padding: 14px 40px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  max-width: 1280px;
+  margin: 0 auto 0;
+  border-radius: 0 0 16px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.npill {
+  padding: 8px 18px; border-radius: 100px; font-size: 12px; font-weight: 700;
+  text-decoration: none; border: 2px solid transparent; transition: all .2s;
+  font-family: 'Mulish', sans-serif;
+}
+.npill:hover { transform: translateY(-1px); filter: brightness(1.2); }
+.np-sin { background:rgba(217,23,77,0.18); border-color:rgba(217,23,77,0.5); color:#ff6b9d; }
+.np-cos { background:rgba(22,102,224,0.18); border-color:rgba(22,102,224,0.5); color:#60a5fa; }
+.np-tan { background:rgba(196,122,0,0.18); border-color:rgba(196,122,0,0.5); color:#fbbf24; }
+.np-cot { background:rgba(10,124,82,0.18); border-color:rgba(10,124,82,0.5); color:#34d399; }
+.np-ex  { background:rgba(109,40,217,0.18); border-color:rgba(109,40,217,0.5); color:#c4b5fd; }
+.np-task{ background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.25); color:#e2e8f0; }
+
+/* Tags */
+.func-tag {
+  font-family:'Unbounded',sans-serif; font-size:22px; font-weight:800;
+  padding:6px 20px; border-radius:12px; white-space:nowrap;
+}
+.tag-sin { background:#fce8ef; color:var(--sin); }
+.tag-cos { background:#dbeafe; color:var(--cos); }
+.tag-tan { background:#fef3c7; color:var(--tan); }
+.tag-cot { background:#d1fae5; color:var(--cot); }
+.slide-sub { font-size:13px; color:var(--muted); font-weight:600; }
+
+/* Step list */
+.steps { display:flex; flex-direction:column; gap:10px; }
+.step {
+  display:flex; gap:12px; align-items:flex-start;
+  background:#f8faff; border:1.5px solid var(--border);
+  border-radius:12px; padding:13px 15px;
+}
+.step-n {
+  width:28px; height:28px; border-radius:8px; display:flex; align-items:center;
+  justify-content:center; font-family:'Unbounded',sans-serif; font-size:12px;
+  font-weight:800; flex-shrink:0;
+}
+.sn-sin { background:#fce8ef; color:var(--sin); }
+.sn-cos { background:#dbeafe; color:var(--cos); }
+.sn-tan { background:#fef3c7; color:var(--tan); }
+.sn-cot { background:#d1fae5; color:var(--cot); }
+.step-body { font-size:13.5px; line-height:1.72; }
+
+/* Chips */
+.chip {
+  display:inline-block; border-radius:5px; padding:1px 7px;
+  font-family:monospace; font-size:13px; font-weight:700; margin:0 2px;
+}
+.cs { background:#fce8ef; color:var(--sin); }
+.cc { background:#dbeafe; color:var(--cos); }
+.ct { background:#fef3c7; color:var(--tan); }
+.co { background:#d1fae5; color:var(--cot); }
+.ca { background:#eef2ff; color:var(--accent); }
+.cn { background:#f0fdf4; color:#065f46; }
+
+/* Why box */
+.why {
+  margin-top:14px; border-radius:12px; padding:16px 18px;
+  font-size:13px; line-height:1.75; border:1.5px solid;
+}
+.why .wt { font-family:'Unbounded',sans-serif; font-size:9px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
+.why-sin { background:#fdf4ff; border-color:#f0abfc; }
+.why-sin .wt { color:#7e22ce; }
+.why-cos { background:#eff6ff; border-color:#93c5fd; }
+.why-cos .wt { color:#1e40af; }
+.why-tan { background:#fffbeb; border-color:#fcd34d; }
+.why-tan .wt { color:#92400e; }
+.why-cot { background:#ecfdf5; border-color:#6ee7b7; }
+.why-cot .wt { color:#065f46; }
+
+/* Formula */
+.fml {
+  margin-top:14px; padding:14px 18px; border-radius:12px; border-left:4px solid;
+}
+.fml .fe { font-family:'Unbounded',sans-serif; font-size:16px; font-weight:800; margin-bottom:3px; }
+.fml .fs { font-size:11px; color:var(--muted); }
+.fml-sin { background:#fdf2f8; border-color:var(--sin); }
+.fml-cos { background:#eff6ff; border-color:var(--cos); }
+.fml-tan { background:#fffbeb; border-color:var(--tan); }
+.fml-cot { background:#ecfdf5; border-color:var(--cot); }
+
+/* Slider */
+.slider-row { display:flex; align-items:center; gap:8px; width:100%; }
+.slider-row label { font-size:11px; color:var(--muted); font-weight:700; min-width:50px; }
+input[type=range] { flex:1; -webkit-appearance:none; height:5px; border-radius:5px; background:var(--border); cursor:pointer; outline:none; }
+.sr-sin::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--sin); cursor:pointer; border:2px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,0.2); }
+.sr-cos::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--cos); cursor:pointer; border:2px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,0.2); }
+.sr-tan::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--tan); cursor:pointer; border:2px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,0.2); }
+.sr-cot::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--cot); cursor:pointer; border:2px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,0.2); }
+.aval { font-family:'Unbounded',sans-serif; font-size:12px; font-weight:800; min-width:44px; text-align:right; }
+
+.val-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; }
+.vbox { background:#fff; border:1.5px solid var(--border); border-radius:10px; padding:10px; text-align:center; }
+.vbl { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; font-weight:700; margin-bottom:3px; }
+.vbv { font-family:'Unbounded',sans-serif; font-size:13px; font-weight:800; }
+
+canvas.uc { border-radius:12px; border:1.5px solid var(--border); display:block; background:#fff; }
+
+/* Quiz / Task */
+.task-body { padding:32px 44px; }
+.task-ttl { font-family:'Unbounded',sans-serif; font-size:18px; font-weight:800; margin-bottom:10px; }
+.task-desc { font-size:14px; color:var(--muted); margin-bottom:18px; line-height:1.65; }
+.quiz-opts { display:flex; flex-direction:column; gap:9px; margin-top:16px; }
+.qopt {
+  display:flex; align-items:center; gap:12px; background:#f8faff;
+  border:2px solid var(--border); border-radius:10px; padding:13px 16px;
+  cursor:pointer; transition:all .18s; font-size:14px;
+}
+.qopt:hover { border-color:var(--accent); background:#eef2ff; }
+.qopt.correct { border-color:#059669; background:#ecfdf5; }
+.qopt.wrong   { border-color:#dc2626; background:#fef2f2; }
+.okey { width:20px; height:20px; border-radius:50%; border:2px solid var(--border); flex-shrink:0; background:#fff; }
+.qopt.correct .okey { background:#059669; border-color:#059669; }
+.qopt.wrong   .okey { background:#dc2626; border-color:#dc2626; }
+
+.prog-bar { height:5px; background:var(--border); border-radius:5px; overflow:hidden; margin-bottom:18px; }
+.prog-fill { height:100%; border-radius:5px; background:linear-gradient(90deg,var(--cos),var(--accent)); transition:width .4s; }
+.qcounter { font-size:11px; color:var(--muted); font-weight:700; margin-bottom:8px; }
+
+.feedback {
+  margin-top:14px; padding:13px 16px; border-radius:10px;
+  font-size:13px; line-height:1.6; display:none;
+}
+.feedback.show { display:block; }
+.feedback.ok  { background:#ecfdf5; border:1.5px solid #6ee7b7; color:#065f46; }
+.feedback.err { background:#fef2f2; border:1.5px solid #fca5a5; color:#991b1b; }
+
+.score-box { background:linear-gradient(135deg,#eef2ff,#ecfdf5); border:2px solid var(--accent); border-radius:16px; padding:32px; text-align:center; display:none; margin-top:20px; }
+.score-box.show { display:block; }
+.score-num { font-family:'Unbounded',sans-serif; font-size:52px; font-weight:800; color:var(--accent); }
+
+.btn { padding:10px 20px; border-radius:9px; border:none; font-family:'Mulish',sans-serif; font-size:13px; font-weight:700; cursor:pointer; transition:all .18s; }
+.btn-p { background:var(--accent); color:#fff; }
+.btn-d { background:#fef2f2; color:#b91c1c; border:1.5px solid #fecaca; }
+.btn-o { background:#fff; color:var(--text); border:1.5px solid var(--border); }
+.btn:hover { transform:translateY(-2px); box-shadow:0 3px 10px rgba(0,0,0,0.1); }
+
+.color-sw { width:26px; height:26px; border-radius:50%; border:2.5px solid transparent; cursor:pointer; transition:all .18s; }
+.color-sw.active { border-color:var(--text); transform:scale(1.2); }
+
+#draw-canvas-wrap { border-radius:12px; overflow:hidden; border:2px solid var(--border); }
+#draw-canvas { display:block; cursor:crosshair; touch-action:none; }
+
+/* Ex grid */
+.ex-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; padding:0 44px 28px; }
+.ex-card { background:#f8faff; border:2px solid var(--border); border-radius:14px; padding:18px; cursor:pointer; transition:all .18s; }
+.ex-card:hover { border-color:var(--border); box-shadow:0 3px 16px rgba(26,35,64,0.09); transform:translateY(-2px); }
+.ex-eq { font-family:'Unbounded',sans-serif; font-size:16px; font-weight:800; margin-bottom:5px; }
+.ex-hint { font-size:11px; color:var(--muted); margin-bottom:8px; }
+.ex-sw { display:none; flex-direction:column; gap:6px; margin-top:10px; }
+.ex-card.open .ex-sw { display:flex; }
+.ex-si { border-radius:7px; padding:8px 12px; font-size:12.5px; line-height:1.6; border-left:3px solid; }
+.ex-tog { font-size:11px; font-weight:700; display:flex; align-items:center; gap:4px; }
+
+/* concept */
+.concept-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.ci { background:#f8faff; border:1.5px solid var(--border); border-radius:12px; padding:16px; display:flex; gap:10px; font-size:13.5px; line-height:1.6; }
+.cdot { width:13px; height:13px; border-radius:50%; flex-shrink:0; margin-top:3px; }
+.alg-row { display:flex; flex-direction:column; gap:9px; }
+.alg-step { display:flex; gap:9px; align-items:flex-start; font-size:13.5px; line-height:1.6; }
+.alg-n { background:var(--accent); color:#fff; width:22px; height:22px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:11px; flex-shrink:0; }
+
+.snap-hint { font-size:11px; color:var(--muted); margin-top:7px; font-style:italic; }
+
+/* Hero text */
+.hero-badge { display:inline-block; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); color:#c7d2fe; font-family:'Unbounded',sans-serif; font-size:9px; letter-spacing:3px; text-transform:uppercase; padding:6px 18px; border-radius:100px; margin-bottom:24px; }
+.hero-title { font-family:'Unbounded',sans-serif; font-size:clamp(28px,5vw,58px); font-weight:800; line-height:1.1; margin-bottom:14px; }
+.hero-title span { color:#818cf8; }
+.hero-sub { font-size:clamp(14px,2vw,17px); color:#94a3b8; max-width:560px; line-height:1.75; margin-bottom:40px; margin-left:auto; margin-right:auto; }
+.hero-grid-bg { position:absolute; inset:0; pointer-events:none; background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px); background-size:40px 40px; }
+
+.page-wrap { max-width:1280px; margin:0 auto; padding:24px 24px 0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div style="background:#1a2340;padding:0;">
+  <div class="nav-bar">
+    <span style="color:#818cf8;font-family:'Unbounded',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;margin-right:6px;">ТРИГ. УРВ.</span>
+    <a href="#slide-hero" class="npill" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.2);color:#e2e8f0;">Главная</a>
+    <a href="#slide-sin" class="npill np-sin">sin x = a</a>
+    <a href="#slide-cos" class="npill np-cos">cos x = a</a>
+    <a href="#slide-tan" class="npill np-tan">tg x = a</a>
+    <a href="#slide-cot" class="npill np-cot">ctg x = a</a>
+    <a href="#slide-examples" class="npill np-ex">Примеры</a>
+    <a href="#slide-task" class="npill np-task">Задания ✏️</a>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+<!-- ─────────────── SLIDE 1: HERO ─────────────── -->
+<div class="slide slide-hero" id="slide-hero">
+  <div class="hero-grid-bg"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="hero-badge">Алгебра · 10 класс</div>
+    <div class="hero-title">Тригонометрические<br><span>уравнения</span></div>
+    <div class="hero-sub">Решаем через единичный круг — без зазубривания формул.<br>Главное — понять логику один раз.</div>
+    <canvas id="main-circle" width="260" height="260" style="border-radius:50%;border:2px solid rgba(255,255,255,0.15);margin:0 auto 32px;display:block;background:rgba(255,255,255,0.04);"></canvas>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+      <a href="#slide-sin" class="npill np-sin">sin x = a</a>
+      <a href="#slide-cos" class="npill np-cos">cos x = a</a>
+      <a href="#slide-tan" class="npill np-tan">tg x = a</a>
+      <a href="#slide-cot" class="npill np-cot">ctg x = a</a>
+      <a href="#slide-examples" class="npill np-ex">Примеры</a>
+      <a href="#slide-task" class="npill np-task">Задания ✏️</a>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────── SLIDE 1b: CONCEPT ─────────────── -->
+<div class="slide" id="slide-concept">
+  <div class="slide-top">
+    <div style="font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase;">Главная идея</div>
+    <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;">Единичный круг — это координатная плоскость</div>
+  </div>
+  <div class="slide-body" style="grid-template-columns:1fr 1fr;padding:0;">
+    <div style="padding:28px 36px;border-right:2px solid var(--border);display:flex;flex-direction:column;gap:20px;">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Что обозначает каждая функция</div>
+        <div class="concept-row">
+          <div class="ci"><div class="cdot" style="background:var(--sin)"></div><div><strong>sin(α)</strong> — координата по <strong>оси Y</strong> (высота точки)</div></div>
+          <div class="ci"><div class="cdot" style="background:var(--cos)"></div><div><strong>cos(α)</strong> — координата по <strong>оси X</strong> (ширина точки)</div></div>
+          <div class="ci"><div class="cdot" style="background:var(--tan)"></div><div><strong>tg(α)</strong> — отрезок на касательной <strong>x = 1</strong></div></div>
+          <div class="ci"><div class="cdot" style="background:var(--cot)"></div><div><strong>ctg(α)</strong> — отрезок на касательной <strong>y = 1</strong></div></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Алгоритм решения (без зубрёжки!)</div>
+        <div class="alg-row">
+          <div class="alg-step"><div class="alg-n">1</div><div>Рисуй единичный круг с осями X и Y</div></div>
+          <div class="alg-step"><div class="alg-n">2</div><div>Найди нужное число на нужной оси (Y для sin, X для cos)</div></div>
+          <div class="alg-step"><div class="alg-n">3</div><div>Проведи прямую через эту точку (горизонтальную для sin, вертикальную для cos)</div></div>
+          <div class="alg-step"><div class="alg-n">4</div><div>Прочитай углы <strong>двух</strong> точек пересечения с кругом — это ответы</div></div>
+          <div class="alg-step"><div class="alg-n">5</div><div>Добавь +2πn (полные обороты) — получишь все решения</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;padding:28px;">
+      <canvas id="concept-circle" width="300" height="300" class="uc"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────── SLIDE 2: SIN ─────────────── -->
+<div class="slide" id="slide-sin">
+  <div class="slide-top" style="background:#fdf5f8;">
+    <div class="func-tag tag-sin">sin x = a</div>
+    <div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:18px;font-weight:800;">Синус: смотрим на ось Y</div>
+      <div class="slide-sub">Ищем число a на оси Y → горизонтальная линия → две точки на круге</div>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="col-left">
+      <canvas id="sin-circle" width="310" height="310" class="uc"></canvas>
+      <div class="slider-row">
+        <label style="color:var(--sin)">Угол α</label>
+        <input type="range" id="sin-slider" class="sr-sin" min="0" max="360" value="30" step="1">
+        <div class="aval" id="sin-av" style="color:var(--sin)">30°</div>
+      </div>
+      <div class="val-row">
+        <div class="vbox"><div class="vbl">sin(α)</div><div class="vbv" id="sin-val" style="color:var(--sin)">0.500</div></div>
+        <div class="vbox"><div class="vbl">Два ответа</div><div class="vbv" id="sin-sol" style="color:var(--sin);font-size:10px">π/6 ; 5π/6</div></div>
+      </div>
+    </div>
+    <div class="col-right">
+      <div class="steps">
+        <div class="step"><div class="step-n sn-sin">1</div>
+          <div class="step-body"><strong>Рисуем круг с осями.</strong> На оси Y отмечаем значения: −1, −0.5, 0, 0.5, 1.</div>
+        </div>
+        <div class="step"><div class="step-n sn-sin">2</div>
+          <div class="step-body"><strong>Находим значение 0.5 на оси Y.</strong> Идём по вертикальной оси вверх до отметки <span class="chip cn">0.5</span> и ставим там точку.</div>
+        </div>
+        <div class="step"><div class="step-n sn-sin">3</div>
+          <div class="step-body"><strong>Чертим горизонтальную линию <span class="chip cs">y = 0.5</span></strong> — из этой точки влево и вправо, через весь круг. Она пересечёт круг в <strong>двух точках</strong>.</div>
+        </div>
+        <div class="step"><div class="step-n sn-sin">4</div>
+          <div class="step-body"><strong>Отмечаем обе точки и читаем углы:</strong><br>
+            • Правая точка (I четверть): <span class="chip cs">α₁ = 30° = π/6</span><br>
+            • Левая точка (II четверть): <span class="chip cs">α₂ = 150° = 5π/6</span>
+          </div>
+        </div>
+        <div class="step"><div class="step-n sn-sin">5</div>
+          <div class="step-body"><strong>Записываем ответ (+2πn):</strong><br>
+            <span class="chip cs">x = π/6 + 2πn</span> &nbsp;или&nbsp; <span class="chip cs">x = 5π/6 + 2πn</span>, n ∈ ℤ
+          </div>
+        </div>
+      </div>
+      <div class="why why-sin">
+        <div class="wt">❓ Почему именно 5π/6? Откуда берётся второй угол?</div>
+        <strong>π/6 = 30°</strong> — первый угол, синус которого равен 0.5 (стандартный угол).<br>
+        <strong>5π/6 = 150°</strong> — вторая точка пересечения линии y = 0.5 с кругом. Она симметрична первой <strong>относительно оси Y</strong>.<br><br>
+        📐 <strong>Правило второго угла для синуса:</strong> <span class="chip ca">второй угол = π − первый</span><br>
+        π − π/6 = 6π/6 − π/6 = <strong>5π/6</strong> ✓
+      </div>
+      <div class="fml fml-sin">
+        <div class="fe" style="color:var(--sin)">sin x = a &nbsp;→&nbsp; x = π/6 + 2πn &nbsp;или&nbsp; x = 5π/6 + 2πn</div>
+        <div class="fs">В общем виде: x = (−1)ⁿ arcsin(a) + πn, n ∈ ℤ</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────── SLIDE 3: COS ─────────────── -->
+<div class="slide" id="slide-cos">
+  <div class="slide-top" style="background:#eff6ff;">
+    <div class="func-tag tag-cos">cos x = a</div>
+    <div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:18px;font-weight:800;">Косинус: смотрим на ось X</div>
+      <div class="slide-sub">Ищем число a на оси X → вертикальная линия → две точки на круге</div>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="col-left">
+      <canvas id="cos-circle" width="310" height="310" class="uc"></canvas>
+      <div class="slider-row">
+        <label style="color:var(--cos)">Угол α</label>
+        <input type="range" id="cos-slider" class="sr-cos" min="0" max="360" value="60" step="1">
+        <div class="aval" id="cos-av" style="color:var(--cos)">60°</div>
+      </div>
+      <div class="val-row">
+        <div class="vbox"><div class="vbl">cos(α)</div><div class="vbv" id="cos-val" style="color:var(--cos)">0.500</div></div>
+        <div class="vbox"><div class="vbl">Два ответа</div><div class="vbv" id="cos-sol" style="color:var(--cos);font-size:10px">±π/3+2πn</div></div>
+      </div>
+    </div>
+    <div class="col-right">
+      <div class="steps">
+        <div class="step"><div class="step-n sn-cos">1</div>
+          <div class="step-body"><strong>Рисуем круг с осями.</strong> На оси X отмечаем значения: −1, −0.5, 0, 0.5, 1.</div>
+        </div>
+        <div class="step"><div class="step-n sn-cos">2</div>
+          <div class="step-body"><strong>Находим значение 0.5 на оси X.</strong> Идём по горизонтальной оси вправо до отметки <span class="chip cn">0.5</span>.</div>
+        </div>
+        <div class="step"><div class="step-n sn-cos">3</div>
+          <div class="step-body"><strong>Чертим вертикальную линию <span class="chip cc">x = 0.5</span></strong> — из этой точки вверх и вниз, через весь круг. Два пересечения с кругом — одно выше оси X, одно ниже.</div>
+        </div>
+        <div class="step"><div class="step-n sn-cos">4</div>
+          <div class="step-body"><strong>Читаем оба угла:</strong><br>
+            • Верхняя точка (I четверть): <span class="chip cc">α₁ = 60° = π/3</span><br>
+            • Нижняя точка (IV четверть): <span class="chip cc">α₂ = −60° = −π/3</span>
+          </div>
+        </div>
+        <div class="step"><div class="step-n sn-cos">5</div>
+          <div class="step-body"><strong>Записываем ответ:</strong> углы симметричны → <span class="chip cc">x = ±π/3 + 2πn</span></div>
+        </div>
+      </div>
+      <div class="why why-cos">
+        <div class="wt">❓ Почему ±π/3, а не два отдельных угла как у синуса?</div>
+        У синуса: π/6 и 5π/6 — они <em>не равны по модулю</em>, поэтому пишем раздельно.<br>
+        У косинуса: π/3 и −π/3 — они <em>равны по модулю</em>, симметричны по оси X → пишем <span class="chip cc">±π/3</span>.<br><br>
+        📐 <strong>Правило второго угла для косинуса:</strong> <span class="chip ca">второй угол = −первый</span>
+      </div>
+      <div class="fml fml-cos">
+        <div class="fe" style="color:var(--cos)">cos x = a &nbsp;→&nbsp; x = ±arccos(a) + 2πn</div>
+        <div class="fs">Знак ± = два угла: +arccos(a) и −arccos(a). Оба дают одинаковый косинус.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────── SLIDE 4: TAN ─────────────── -->
+<div class="slide" id="slide-tan">
+  <div class="slide-top" style="background:#fffbeb;">
+    <div class="func-tag tag-tan">tg x = a</div>
+    <div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:18px;font-weight:800;">Тангенс: касательная x = 1</div>
+      <div class="slide-sub">Откладываем a на касательной справа → луч из O → один угол → период π</div>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="col-left">
+      <canvas id="tan-circle" width="310" height="310" class="uc"></canvas>
+      <div class="slider-row">
+        <label style="color:var(--tan)">Угол α</label>
+        <input type="range" id="tan-slider" class="sr-tan" min="-80" max="80" value="45" step="1">
+        <div class="aval" id="tan-av" style="color:var(--tan)">45°</div>
+      </div>
+      <div class="val-row">
+        <div class="vbox"><div class="vbl">tg(α)</div><div class="vbv" id="tan-val" style="color:var(--tan)">1.000</div></div>
+        <div class="vbox"><div class="vbl">Ответ</div><div class="vbv" id="tan-sol" style="color:var(--tan);font-size:10px">π/4+πn</div></div>
+      </div>
+    </div>
+    <div class="col-right">
+      <div class="steps">
+        <div class="step"><div class="step-n sn-tan">1</div>
+          <div class="step-body"><strong>Рисуем касательную x = 1.</strong> Вертикальная прямая, которая касается круга в точке (1, 0) справа.</div>
+        </div>
+        <div class="step"><div class="step-n sn-tan">2</div>
+          <div class="step-body"><strong>На касательной x = 1 откладываем значение a.</strong> Для <span class="chip ct">tg x = 1</span>: отмечаем высоту 1 → точка (1, 1).</div>
+        </div>
+        <div class="step"><div class="step-n sn-tan">3</div>
+          <div class="step-body"><strong>Проводим луч из центра O через точку (1, 1).</strong> Угол этого луча с осью X — и есть ответ.</div>
+        </div>
+        <div class="step"><div class="step-n sn-tan">4</div>
+          <div class="step-body"><strong>Читаем угол:</strong> <span class="chip ct">α = 45° = π/4</span>. Один класс решений с периодом π:<br><span class="chip ct">x = π/4 + πn</span>, n ∈ ℤ</div>
+        </div>
+      </div>
+      <div class="why why-tan">
+        <div class="wt">❓ Почему один ответ и период π, а не два ответа и 2π?</div>
+        Для sin/cos — линия пересекает круг в двух разных точках → два угла → 2πn.<br>
+        Для тангенса — <strong>один луч</strong> из O. Через 180° (π) луч смотрит в ту же сторону пересечения с касательной → период вдвое меньше!<br><br>
+        📐 Проверка: tg(45°) = 1, tg(45° + 180°) = tg(225°) = 1 ✓
+      </div>
+      <div class="fml fml-tan">
+        <div class="fe" style="color:var(--tan)">tg x = a &nbsp;→&nbsp; x = arctg(a) + πn</div>
+        <div class="fs">Один класс! Период π. Не определён при x = π/2 + πn.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────── SLIDE 5: COT ─────────────── -->
+<div class="slide" id="slide-cot">
+  <div class="slide-top" style="background:#ecfdf5;">
+    <div class="func-tag tag-cot">ctg x = a</div>
+    <div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:18px;font-weight:800;">Котангенс: касательная y = 1</div>
+      <div class="slide-sub">Как тангенс, но касательная горизонтальная (сверху круга)</div>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="col-left">
+      <canvas id="cot-circle" width="310" height="310" class="uc"></canvas>
+      <div class="slider-row">
+        <label style="color:var(--cot)">Угол α</label>
+        <input type="range" id="cot-slider" class="sr-cot" min="10" max="170" value="60" step="1">
+        <div class="aval" id="cot-av" style="color:var(--cot)">60°</div>
+      </div>
+      <div class="val-row">
+        <div class="vbox"><div class="vbl">ctg(α)</div><div class="vbv" id="cot-val" style="color:var(--cot)">0.577</div></div>
+        <div class="vbox"><div class="vbl">Ответ</div><div class="vbv" id="cot-sol" style="color:var(--cot);font-size:10px">π/6+πn</div></div>
+      </div>
+    </div>
+    <div class="col-right">
+      <div class="steps">
+        <div class="step"><div class="step-n sn-cot">1</div>
+          <div class="step-body"><strong>Рисуем касательную y = 1.</strong> Горизонтальная прямая, касающаяся круга сверху в точке (0, 1).</div>
+        </div>
+        <div class="step"><div class="step-n sn-cot">2</div>
+          <div class="step-body"><strong>Откладываем a по горизонтали на y = 1.</strong> Для <span class="chip co">ctg x = 1</span>: точка (1, 1).</div>
+        </div>
+        <div class="step"><div class="step-n sn-cot">3</div>
+          <div class="step-body"><strong>Луч из O через (1, 1)</strong> образует угол 45° = π/4.<br><span class="chip co">x = π/4 + πn</span>, n ∈ ℤ</div>
+        </div>
+      </div>
+      <div class="why why-cot">
+        <div class="wt">❓ Разница между tg и ctg на круге</div>
+        <strong>tg</strong> = sin/cos → касательная <strong>x = 1</strong> (вертикальная, справа)<br>
+        <strong>ctg</strong> = cos/sin → касательная <strong>y = 1</strong> (горизонтальная, сверху)<br><br>
+        💡 ctg(α) = 1/tg(α) — они взаимно обратные!
+      </div>
+      <div class="fml fml-cot">
+        <div class="fe" style="color:var(--cot)">ctg x = a &nbsp;→&nbsp; x = arcctg(a) + πn</div>
+        <div class="fs">Один класс, период π. Не определён при x = πn (sin = 0).</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────── SLIDE 6: EXAMPLES ─────────────── -->
+<div class="slide" id="slide-examples">
+  <div class="slide-top">
+    <div style="font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;color:var(--purple);letter-spacing:2px;text-transform:uppercase;">Разбор задач</div>
+    <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;">Пошаговые примеры — нажми чтобы раскрыть</div>
+  </div>
+  <div class="ex-grid" id="ex-grid" style="flex:1;align-content:start;overflow:auto;"></div>
+</div>
+
+<!-- ─────────────── SLIDE 7: DRAWING TASK ─────────────── -->
+<div class="slide" id="slide-task">
+  <div class="slide-top">
+    <div style="font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;color:var(--tan);letter-spacing:2px;text-transform:uppercase;">Практика</div>
+    <div style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;">Нарисуй решение на единичном круге ✏️</div>
+  </div>
+  <div class="slide-body" style="grid-template-columns:1fr 1fr;">
+    <div style="padding:24px 28px;border-right:2px solid var(--border);display:flex;flex-direction:column;gap:14px;">
+      <div class="task-desc" id="draw-task-desc" style="margin:0;font-size:14px;color:var(--text);line-height:1.7;">Загрузка...</div>
+      <div id="draw-canvas-wrap" style="flex:1;">
+        <canvas id="draw-canvas" width="460" height="310"></canvas>
+      </div>
+      <div class="snap-hint">💡 Кликни рядом с кругом — точка встанет на ближайший угол (кратно 15°)</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+        <div style="display:flex;gap:6px;">
+          <div class="color-sw active" style="background:#d9174d;" data-color="#d9174d"></div>
+          <div class="color-sw" style="background:#1666e0;" data-color="#1666e0"></div>
+          <div class="color-sw" style="background:#c47a00;" data-color="#c47a00"></div>
+          <div class="color-sw" style="background:#0a7c52;" data-color="#0a7c52"></div>
+          <div class="color-sw" style="background:#6d28d9;" data-color="#6d28d9"></div>
+        </div>
+        <button class="btn btn-d" id="clear-btn">Очистить</button>
+        <button class="btn btn-o" id="next-task-btn">Следующее →</button>
+        <button class="btn btn-p" id="show-ans-btn">Показать ответ</button>
+      </div>
+      <div class="feedback" id="draw-feedback"></div>
+    </div>
+    <!-- QUIZ panel -->
+    <div style="padding:24px 28px;display:flex;flex-direction:column;gap:0;">
+      <div style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:800;margin-bottom:12px;">🧠 Выбери правильный ответ</div>
+      <div class="qcounter" id="qcounter">Вопрос 1 из 8</div>
+      <div class="prog-bar"><div class="prog-fill" id="qprog" style="width:12.5%"></div></div>
+      <div id="qquestion" style="font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;margin-bottom:5px;"></div>
+      <div id="qhint" style="font-size:12px;color:var(--muted);margin-bottom:2px;"></div>
+      <div class="quiz-opts" id="qopts"></div>
+      <div class="feedback" id="qfeedback"></div>
+      <div style="margin-top:12px;">
+        <button class="btn btn-p" id="qnext" style="display:none;">Следующий →</button>
+      </div>
+      <div class="score-box" id="score-box">
+        <div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px;">Итог</div>
+        <div class="score-num" id="score-num">0/8</div>
+        <div style="margin-top:10px;font-size:14px;color:var(--muted);" id="score-msg"></div>
+        <button class="btn btn-p" style="margin-top:18px;" onclick="restartQ()">Ещё раз</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end page-wrap -->
+<div style="height:40px;"></div>
+
+<script>
+const τ=Math.PI*2, D=d=>d*Math.PI/180, R=r=>r*180/Math.PI;
+const NICE={0:'0°',30:'π/6',45:'π/4',60:'π/3',90:'π/2',120:'2π/3',135:'3π/4',150:'5π/6',
+  180:'π',210:'7π/6',225:'5π/4',240:'4π/3',270:'3π/2',300:'5π/3',315:'7π/4',330:'11π/6',360:'2π'};
+function nd(d){const d2=((Math.round(d)%360)+360)%360;return NICE[d2]||`${Math.round(d)}°`;}
+
+const SIN='#d9174d', COS='#1666e0', TAN='#c47a00', COT='#0a7c52';
+
+// ══════════════════════════════════════════
+// CORE CIRCLE DRAWING — shows BOTH intersection points
+// ══════════════════════════════════════════
+function drawCircle(canvas, angleDeg, fn) {
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2;
+  const R = Math.min(W,H) * 0.36;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,W,H);
+
+  const angle = D(angleDeg);
+  const sv = Math.sin(angle), cv = Math.cos(angle);
+
+  // ── background light sectors ──
+  ctx.globalAlpha = 0.04;
+  ['#ff0000','#0055ff','#ff0000','#0055ff'].forEach((c,i) => {
+    ctx.fillStyle = c;
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,R, i*Math.PI/2, (i+1)*Math.PI/2);
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+
+  // quadrant labels
+  ctx.fillStyle = 'rgba(26,35,64,0.08)';
+  ctx.font = 'bold 18px Mulish';
+  ctx.fillText('I',   cx+R*0.55, cy-R*0.55);
+  ctx.fillText('II',  cx-R*0.65, cy-R*0.55);
+  ctx.fillText('III', cx-R*0.7,  cy+R*0.62);
+  ctx.fillText('IV',  cx+R*0.5,  cy+R*0.62);
+
+  // ── grid helper circles ──
+  ctx.strokeStyle = 'rgba(26,35,64,0.06)'; ctx.lineWidth=1;
+  [0.5,1].forEach(f=>{ctx.beginPath();ctx.arc(cx,cy,R*f,0,τ);ctx.stroke();});
+
+  // ── axes ──
+  ctx.strokeStyle = 'rgba(26,35,64,0.3)'; ctx.lineWidth=1.5; ctx.setLineDash([]);
+  ctx.beginPath();ctx.moveTo(cx-R-28,cy);ctx.lineTo(cx+R+36,cy);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx,cy-R-28);ctx.lineTo(cx,cy+R+28);ctx.stroke();
+  // arrowheads
+  const arr=(x,y,dx,dy)=>{ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-dx+dy*0.4,y-dy-dx*0.4);ctx.moveTo(x,y);ctx.lineTo(x-dx-dy*0.4,y-dy+dx*0.4);ctx.stroke();};
+  arr(cx+R+36,cy,6,0); arr(cx,cy-R-28,0,-6);
+  // axis labels
+  ctx.fillStyle='rgba(26,35,64,0.5)'; ctx.font='bold 12px Mulish';
+  ctx.fillText('x',cx+R+22,cy-6); ctx.fillText('y',cx+6,cy-R-18);
+
+  // ── tick marks & axis values ──
+  ctx.strokeStyle='rgba(26,35,64,0.25)'; ctx.lineWidth=1; ctx.font='10px Mulish'; ctx.fillStyle='rgba(26,35,64,0.45)';
+  // Y axis: −1, −0.5, 0.5, 1
+  [{v:1,l:'1'},{v:0.5,l:'0.5'},{v:-0.5,l:'-0.5'},{v:-1,l:'-1'}].forEach(({v,l})=>{
+    const y2=cy-R*v;
+    ctx.beginPath();ctx.moveTo(cx-5,y2);ctx.lineTo(cx+5,y2);ctx.stroke();
+    ctx.fillText(l,cx+8,y2+4);
+  });
+  // X axis: −1, −0.5, 0.5, 1
+  [{v:1,l:'1'},{v:0.5,l:'0.5'},{v:-0.5,l:''},{v:-1,l:'-1'}].forEach(({v,l})=>{
+    const x2=cx+R*v;
+    ctx.beginPath();ctx.moveTo(x2,cy-5);ctx.lineTo(x2,cy+5);ctx.stroke();
+    if(l) ctx.fillText(l,x2-(l.length>1?8:3),cy+16);
+  });
+  ctx.fillText('-0.5',cx-R*0.5-16,cy+16);
+  ctx.fillText('0',cx+3,cy+14);
+
+  // ── unit circle ──
+  ctx.beginPath();ctx.arc(cx,cy,R,0,τ);
+  ctx.strokeStyle='rgba(26,35,64,0.22)'; ctx.lineWidth=2; ctx.stroke();
+
+  // ── special angle dots on circle ──
+  [0,30,45,60,90,120,135,150,180,210,225,240,270,300,315,330].forEach(deg=>{
+    const a=D(deg), px2=cx+R*Math.cos(a), py2=cy-R*Math.sin(a);
+    ctx.beginPath();ctx.arc(px2,py2,2.5,0,τ);
+    ctx.fillStyle='rgba(26,35,64,0.2)';ctx.fill();
+  });
+
+  // ══ FUNCTION-SPECIFIC DRAWING ══
+  const px = cx+R*cv, py = cy-R*sv;   // primary point
+  let color;
+
+  if (fn==='sin') {
+    color = SIN;
+    const a = Math.asin(Math.max(-1,Math.min(1,sv)));  // in [-π/2, π/2]
+    const a1 = a;                   // primary
+    const a2 = Math.PI - a;         // secondary (mirror over Y axis)
+    const p1x=cx+R*Math.cos(a1), p1y=cy-R*Math.sin(a1);
+    const p2x=cx+R*Math.cos(a2), p2y=cy-R*Math.sin(a2);
+    const lineY = cy - R*sv;
+
+    // Horizontal guide line y=sv — full width
+    ctx.strokeStyle=SIN+'50'; ctx.lineWidth=1.5; ctx.setLineDash([6,4]);
+    ctx.beginPath();ctx.moveTo(cx-R-20,lineY);ctx.lineTo(cx+R+20,lineY);ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Dot on Y axis at value sv
+    ctx.beginPath();ctx.arc(cx,lineY,5.5,0,τ);
+    ctx.fillStyle=SIN; ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.fillStyle=SIN;ctx.font='bold 10px Mulish';
+    ctx.fillText(`${sv.toFixed(2)}`,cx+8,lineY+4);
+
+    // Vertical drop lines from both points to X axis (sin projection)
+    [p1x,p2x].forEach(px3=>{
+      ctx.strokeStyle=SIN+'60';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);
+      ctx.beginPath();ctx.moveTo(px3,cy);ctx.lineTo(px3,lineY);ctx.stroke();
+      ctx.setLineDash([]);
+    });
+
+    // Radius lines to both points
+    ctx.strokeStyle='rgba(26,35,64,0.35)';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(p1x,p1y);ctx.stroke();
+    ctx.strokeStyle='rgba(26,35,64,0.2)';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(p2x,p2y);ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Angle arc for primary
+    ctx.strokeStyle=SIN+'80';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(cx,cy,R*0.18,0,-a1,a1>0);ctx.stroke();
+
+    // Both intersection points
+    // Primary (bright)
+    ctx.beginPath();ctx.arc(p1x,p1y,8,0,τ);ctx.fillStyle=SIN;ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+    // Secondary (bright, same color)
+    ctx.beginPath();ctx.arc(p2x,p2y,8,0,τ);ctx.fillStyle=SIN;ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+
+    // Labels for both points
+    ctx.font='bold 11px Mulish'; ctx.fillStyle=SIN;
+    const l1=nd(((R(a1)*1+360)%360));
+    const l2=nd(((R(a2)*1+360)%360));
+    const off1=(cv>=0?10:-50);
+    ctx.fillText(l1, p1x+off1, p1y+(sv>=0?-10:16));
+    ctx.fillText(l2, p2x-40, p2y+(sv>=0?-10:16));
+
+    // Connecting dashed arc between the two angle labels
+    ctx.strokeStyle=SIN+'30';ctx.lineWidth=2;ctx.setLineDash([3,5]);
+    ctx.beginPath();
+    const a1n=(a1+τ)%τ, a2n=(a2+τ)%τ;
+    ctx.arc(cx,cy,R+28,-a1n,-a2n,true);
+    ctx.stroke();ctx.setLineDash([]);
+  }
+
+  else if (fn==='cos') {
+    color = COS;
+    const a = Math.acos(Math.max(-1,Math.min(1,cv)));  // in [0, π]
+    const a1 = a;
+    const a2 = -a;   // mirror over X axis
+    const p1x=cx+R*Math.cos(a1), p1y=cy-R*Math.sin(a1);
+    const p2x=cx+R*Math.cos(a2), p2y=cy-R*Math.sin(a2);
+    const lineX = cx+R*cv;
+
+    // Vertical guide line x=cv
+    ctx.strokeStyle=COS+'50'; ctx.lineWidth=1.5; ctx.setLineDash([6,4]);
+    ctx.beginPath();ctx.moveTo(lineX,cy-R-20);ctx.lineTo(lineX,cy+R+20);ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Dot on X axis
+    ctx.beginPath();ctx.arc(lineX,cy,5.5,0,τ);
+    ctx.fillStyle=COS;ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.fillStyle=COS;ctx.font='bold 10px Mulish';
+    ctx.fillText(`${cv.toFixed(2)}`,lineX-(cv<0?24:4),cy+18);
+
+    // Horizontal projection lines from both points to Y axis
+    [p1y,p2y].forEach(py3=>{
+      ctx.strokeStyle=COS+'60';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);
+      ctx.beginPath();ctx.moveTo(cx,py3);ctx.lineTo(lineX,py3);ctx.stroke();
+      ctx.setLineDash([]);
+    });
+
+    // Radius lines
+    ctx.strokeStyle='rgba(26,35,64,0.35)';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(p1x,p1y);ctx.stroke();
+    ctx.strokeStyle='rgba(26,35,64,0.2)';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(p2x,p2y);ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Both points
+    [p1x,p2x].forEach((ppx,i)=>{
+      const ppy=i===0?p1y:p2y;
+      ctx.beginPath();ctx.arc(ppx,ppy,8,0,τ);ctx.fillStyle=COS;ctx.fill();
+      ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+    });
+
+    // Labels
+    ctx.font='bold 11px Mulish';ctx.fillStyle=COS;
+    ctx.fillText(nd(R(a1)),p1x+(cv>=0?10:-46),p1y-10);
+    const a2deg=((R(a2)*1+360)%360);
+    ctx.fillText(nd(a2deg),p2x+(cv>=0?10:-50),p2y+18);
+  }
+
+  else if (fn==='tan') {
+    color = TAN;
+    const tv = Math.tan(angle);
+    const tx = cx+R;  // x=1 line
+    if (Math.abs(cv)>0.02) {
+      // Tangent line x=1
+      ctx.strokeStyle=TAN+'40';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(tx,cy-R*3.8);ctx.lineTo(tx,cy+R*3.8);ctx.stroke();
+
+      if (Math.abs(tv)<5) {
+        const ty2 = cy-R*tv;
+        // tan segment on tangent line
+        ctx.strokeStyle=TAN;ctx.lineWidth=5;
+        ctx.beginPath();ctx.moveTo(tx,cy);ctx.lineTo(tx,ty2);ctx.stroke();
+
+        // Ray from O through circle to tangent
+        ctx.strokeStyle='rgba(26,35,64,0.4)';ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(tx+20,ty2+(ty2-cy)*20/R);ctx.stroke();
+
+        // Point on tangent
+        ctx.beginPath();ctx.arc(tx,ty2,7,0,τ);ctx.fillStyle=TAN;ctx.fill();
+        ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+        ctx.fillStyle=TAN;ctx.font='bold 10px Mulish';
+        ctx.fillText(`tg = ${tv.toFixed(2)}`,tx+10,(cy+ty2)/2);
+      }
+    }
+    // Point on circle
+    ctx.strokeStyle='rgba(26,35,64,0.4)';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(px,py);ctx.stroke();
+    ctx.beginPath();ctx.arc(px,py,8,0,τ);ctx.fillStyle=TAN;ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle=TAN;ctx.font='bold 11px Mulish';
+    ctx.fillText(nd(((angleDeg%360)+360)%360),px+(cv>=0?10:-50),py+(sv>=0?-10:18));
+  }
+
+  else if (fn==='cot') {
+    color = COT;
+    const sv2 = Math.sin(angle);
+    if (Math.abs(sv2)>0.02) {
+      const ctv = cv/sv2;
+      const ty3 = cy-R;  // y=1 line
+      ctx.strokeStyle=COT+'40';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(cx-R*3.8,ty3);ctx.lineTo(cx+R*3.8,ty3);ctx.stroke();
+
+      if (Math.abs(ctv)<5) {
+        const tx3=cx+R*ctv;
+        ctx.strokeStyle=COT;ctx.lineWidth=5;
+        ctx.beginPath();ctx.moveTo(cx,ty3);ctx.lineTo(tx3,ty3);ctx.stroke();
+        ctx.strokeStyle='rgba(26,35,64,0.4)';ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(tx3+(tx3-cx)*20/R,ty3-(R*20/R));ctx.stroke();
+        ctx.beginPath();ctx.arc(tx3,ty3,7,0,τ);ctx.fillStyle=COT;ctx.fill();
+        ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+        ctx.fillStyle=COT;ctx.font='bold 10px Mulish';
+        ctx.fillText(`ctg = ${ctv.toFixed(2)}`,(cx+tx3)/2,ty3-8);
+      }
+    }
+    ctx.strokeStyle='rgba(26,35,64,0.4)';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(px,py);ctx.stroke();
+    ctx.beginPath();ctx.arc(px,py,8,0,τ);ctx.fillStyle=COT;ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+  }
+
+  // ── Origin dot ──
+  ctx.beginPath();ctx.arc(cx,cy,4,0,τ);ctx.fillStyle='rgba(26,35,64,0.5)';ctx.fill();
+  ctx.fillStyle='rgba(26,35,64,0.4)';ctx.font='bold 10px Mulish';ctx.fillText('O',cx+5,cy+14);
+}
+
+// ── HERO & CONCEPT circles (static) ──
+function drawHeroCircle(){
+  const c=document.getElementById('main-circle');
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height,cx=W/2,cy=H/2,R=88;
+  ctx.clearRect(0,0,W,H);
+  ctx.strokeStyle='rgba(255,255,255,0.2)';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);
+  ctx.beginPath();ctx.moveTo(cx-R-10,cy);ctx.lineTo(cx+R+10,cy);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx,cy-R-10);ctx.lineTo(cx,cy+R+10);ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.beginPath();ctx.arc(cx,cy,R,0,τ);
+  ctx.strokeStyle='rgba(255,255,255,0.3)';ctx.lineWidth=2;ctx.stroke();
+  const colors=[SIN,SIN,'#a855f7',COS,COS,COS,'#a855f7',SIN,SIN,SIN,COT,COT,COS,'#a855f7',SIN];
+  [0,30,45,60,90,120,135,150,180,210,240,270,300,315,330].forEach((deg,i)=>{
+    const a=D(deg);
+    ctx.beginPath();ctx.arc(cx+R*Math.cos(a),cy-R*Math.sin(a),4,0,τ);
+    ctx.fillStyle=colors[i];ctx.fill();
+  });
+  ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='9px Mulish';
+  [{d:0,l:'0'},{d:30,l:'π/6'},{d:60,l:'π/3'},{d:90,l:'π/2'},{d:120,l:'2π/3'},{d:150,l:'5π/6'},{d:180,l:'π'},{d:270,l:'3π/2'}].forEach(({d,l})=>{
+    const a=D(d);
+    ctx.fillText(l,cx+(R+18)*Math.cos(a)-8,cy-(R+18)*Math.sin(a)+4);
+  });
+}
+
+function drawConceptCircle(){
+  const c=document.getElementById('concept-circle');
+  drawCircle(c,37,'sin');  // nice demonstration angle
+}
+
+// ── SLIDERS ──
+function setupSlider(sid,cid,fn,avId,vId,sId,cb){
+  const sl=document.getElementById(sid);
+  const go=()=>{
+    const deg=parseFloat(sl.value);
+    drawCircle(document.getElementById(cid),deg,fn);
+    document.getElementById(avId).textContent=nd(deg);
+    cb(deg,document.getElementById(vId),document.getElementById(sId));
+  };
+  sl.addEventListener('input',go);go();
+}
+
+function sinCb(deg,vEl,sEl){
+  const v=Math.sin(D(deg));vEl.textContent=v.toFixed(3);
+  const as=Math.asin(Math.max(-1,Math.min(1,v)));
+  const a1=R(as),a2=180-R(as);
+  sEl.textContent=nd(((a1%360)+360)%360)+' ; '+nd(((a2%360)+360)%360);
+}
+function cosCb(deg,vEl,sEl){
+  const v=Math.cos(D(deg));vEl.textContent=v.toFixed(3);
+  const ac=R(Math.acos(Math.max(-1,Math.min(1,v))));
+  sEl.textContent='±'+nd(ac)+'+2πn';
+}
+function tanCb(deg,vEl,sEl){
+  const v=Math.tan(D(deg));
+  if(Math.abs(v)>100){vEl.textContent='±∞';sEl.textContent='Не опр.';return;}
+  vEl.textContent=v.toFixed(3);
+  sEl.textContent=nd(R(Math.atan(v)))+'+πn';
+}
+function cotCb(deg,vEl,sEl){
+  const s=Math.sin(D(deg)),c2=Math.cos(D(deg));
+  if(Math.abs(s)<0.01){vEl.textContent='±∞';sEl.textContent='Не опр.';return;}
+  vEl.textContent=(c2/s).toFixed(3);
+  sEl.textContent=nd(((90-R(Math.atan(c2/s))%180)+180)%180)+'+πn';
+}
+
+// ── EXAMPLES ──
+const EX=[
+  {eq:'sin x = 1/2',c:SIN,bg:'#fdf2f8',hint:'sin 30° = 0.5 — стандартный угол',
+   steps:['① Находим 0.5 на оси Y',
+          '② Горизонтальная линия y = 0.5 через весь круг',
+          '③ Правая точка (I чет.): 30° = π/6',
+          '④ Левая точка (II чет.): 150° = 5π/6',
+          '⑤ Почему 5π/6? π − π/6 = 5π/6 (симметрия по Y!)',
+          '✅ x = π/6 + 2πn  |  x = 5π/6 + 2πn']},
+  {eq:'cos x = −1/2',c:COS,bg:'#eff6ff',hint:'Отрицательный cos → II и III четверти',
+   steps:['① Находим −0.5 на оси X',
+          '② Вертикальная линия x = −0.5 через весь круг',
+          '③ Верхняя точка (II чет.): 120° = 2π/3',
+          '④ Нижняя точка (III чет.): −120° = −2π/3',
+          '⑤ Симметрия по X → пишем ±2π/3',
+          '✅ x = ±2π/3 + 2πn']},
+  {eq:'tg x = 1',c:TAN,bg:'#fffbeb',hint:'tg 45° = 1',
+   steps:['① Касательная x = 1, высота 1 → точка (1,1)',
+          '② Луч из O через (1,1) → угол 45° = π/4',
+          '③ Период тангенса = π',
+          '✅ x = π/4 + πn']},
+  {eq:'sin x = 0',c:SIN,bg:'#fdf2f8',hint:'Высота = 0 → ось X',
+   steps:['① y = 0 на оси Y — это сама ось X',
+          '② Горизонтальная линия y = 0 пересекает круг в 0° и 180°',
+          '✅ x = πn']},
+  {eq:'cos x = 1',c:COS,bg:'#eff6ff',hint:'Только одна точка!',
+   steps:['① x = 1 на оси X — крайняя правая точка',
+          '② Вертикальная линия x = 1 касается круга в одной точке (1,0)',
+          '✅ x = 2πn']},
+  {eq:'tg x = −√3',c:TAN,bg:'#fffbeb',hint:'tg 60° = √3, знак минус',
+   steps:['① На x = 1 откладываем −√3 ≈ −1.73 (ниже)',
+          '② arctg(−√3) = −60° = −π/3',
+          '✅ x = −π/3 + πn']},
+];
+function buildEx(){
+  const g=document.getElementById('ex-grid');
+  EX.forEach((ex,i)=>{
+    const c=document.createElement('div');c.className='ex-card';
+    c.innerHTML=`<div class="ex-eq" style="color:${ex.c}">${ex.eq}</div>
+      <div class="ex-hint">${ex.hint}</div>
+      <div class="ex-tog" style="color:${ex.c}" onclick="toggleEx(${i},this)"><span>▶</span> Показать</div>
+      <div class="ex-sw" id="exs-${i}">
+        ${ex.steps.map(s=>`<div class="ex-si" style="border-color:${ex.c}66;background:${ex.bg}">${s}</div>`).join('')}
+      </div>`;
+    g.appendChild(c);
+  });
+}
+function toggleEx(i,btn){
+  const el=document.getElementById(`exs-${i}`);
+  const open=el.style.display==='flex';
+  el.style.display=open?'none':'flex';
+  btn.querySelector('span').textContent=open?'▶':'▼';
+  btn.childNodes[1].textContent=open?' Показать':' Скрыть';
+}
+
+// ── QUIZ ──
+const QZ=[
+  {q:'sin x = √3/2',h:'sin 60° = √3/2 ≈ 0.866',
+   o:['x = π/3 + 2πn','x = π/3 + 2πn  или  x = 2π/3 + 2πn','x = π/6 + πn','x = ±π/3 + 2πn'],
+   c:1,e:'arcsin(√3/2) = π/3. Второй угол: π − π/3 = 2π/3. Оба +2πn.'},
+  {q:'cos x = 0',h:'X-координата = 0 → ось Y',
+   o:['x = πn','x = π/2 + πn','x = 2πn','x = π/4 + πn'],
+   c:1,e:'cos = 0 на оси Y: 90° и 270°. Объединяем: x = π/2 + πn.'},
+  {q:'tg x = −1',h:'В каких четвертях tg отрицателен?',
+   o:['x = −π/4 + 2πn','x = 3π/4 + 2πn','x = −π/4 + πn','x = π/4 + πn'],
+   c:2,e:'arctg(−1) = −π/4. Период π. Ответ: x = −π/4 + πn.'},
+  {q:'sin x = −1',h:'Самая нижняя точка круга',
+   o:['x = −π/2 + 2πn','x = 3π/2 + 2πn','x = π + 2πn','x = 3π/2 + πn'],
+   c:0,e:'Нижняя точка → угол −π/2. Ответ: x = −π/2 + 2πn.'},
+  {q:'cos x = √2/2',h:'cos 45° = √2/2',
+   o:['x = π/4 + 2πn','x = ±π/4 + 2πn','x = π/4 + πn','x = π/3 + 2πn'],
+   c:1,e:'arccos(√2/2) = π/4. Второй угол: −π/4. Ответ: x = ±π/4 + 2πn.'},
+  {q:'sin x = 2',h:'Проверь ОДЗ!',
+   o:['x = arcsin(2) + 2πn','Решений нет','x = 2 + 2πn','x = π/2'],
+   c:1,e:'sin x ∈ [−1, 1] всегда. Значение 2 невозможно.'},
+  {q:'tg x = 0',h:'Когда sin/cos = 0?',
+   o:['x = π/2 + πn','x = 2πn','x = πn','x = π/4 + πn'],
+   c:2,e:'tg = 0 когда sin = 0: x = 0, π, 2π,... → x = πn.'},
+  {q:'cos x = −1',h:'X-координата = −1?',
+   o:['x = π/2 + 2πn','x = π + 2πn','x = ±π + 2πn','x = πn'],
+   c:1,e:'Точка (−1,0) → угол π. Ответ: x = π + 2πn.'},
+];
+let qi=0,sc=0,done=false;
+function loadQ(){
+  done=false;const q=QZ[qi];
+  document.getElementById('qquestion').textContent=q.q;
+  document.getElementById('qhint').textContent='💡 '+q.h;
+  document.getElementById('qcounter').textContent=`Вопрос ${qi+1} из ${QZ.length}`;
+  document.getElementById('qprog').style.width=`${(qi+1)/QZ.length*100}%`;
+  const oc=document.getElementById('qopts');oc.innerHTML='';
+  q.o.forEach((o,i)=>{
+    const el=document.createElement('div');el.className='qopt';
+    el.innerHTML=`<div class="okey"></div><span>${o}</span>`;
+    el.addEventListener('click',()=>selQ(i,el));oc.appendChild(el);
+  });
+  const fb=document.getElementById('qfeedback');fb.className='feedback';fb.textContent='';
+  document.getElementById('qnext').style.display='none';
+}
+function selQ(i,el){
+  if(done)return;done=true;
+  const q=QZ[qi];
+  document.querySelectorAll('.qopt')[q.c].classList.add('correct');
+  if(i===q.c)sc++;else el.classList.add('wrong');
+  const fb=document.getElementById('qfeedback');
+  fb.className=i===q.c?'feedback ok show':'feedback err show';
+  fb.textContent=(i===q.c?'✅ Верно! ':'❌ Неверно. ')+q.e;
+  const nb=document.getElementById('qnext');nb.style.display='inline-flex';
+  if(qi===QZ.length-1)nb.textContent='Показать итог';
+}
+document.getElementById('qnext').addEventListener('click',()=>{
+  qi++;if(qi>=QZ.length){
+    document.getElementById('qopts').innerHTML='';
+    document.getElementById('qquestion').textContent='';
+    document.getElementById('qhint').textContent='';
+    document.getElementById('qfeedback').className='feedback';
+    document.getElementById('qnext').style.display='none';
+    const sb=document.getElementById('score-box');sb.classList.add('show');
+    document.getElementById('score-num').textContent=`${sc}/${QZ.length}`;
+    const pct=sc/QZ.length;
+    document.getElementById('score-msg').textContent=['Повтори материал!','Есть пробелы — продолжай!','Хороший результат! 🎉','Отлично! Мастер тригонометрии! 🏆'][Math.min(3,Math.floor(pct*4))];
+  }else loadQ();
+});
+function restartQ(){
+  qi=0;sc=0;done=false;
+  document.getElementById('score-box').classList.remove('show');
+  loadQ();
+}
+
+// ── DRAWING TASK ──
+const DTASKS=[
+  {d:'Реши <strong style="color:#d9174d">sin x = 0.5</strong><br>1️⃣ Найди <strong>0.5 на оси Y</strong> 2️⃣ Горизонтальная линия 3️⃣ Отметь <strong>обе</strong> точки пересечения',ans:[30,150],c:SIN,t:'sin',v:0.5},
+  {d:'Реши <strong style="color:#1666e0">cos x = −0.5</strong><br>1️⃣ Найди <strong>−0.5 на оси X</strong> 2️⃣ Вертикальная линия 3️⃣ Отметь <strong>обе</strong> точки пересечения',ans:[120,240],c:COS,t:'cos',v:-0.5},
+  {d:'Реши <strong style="color:#d9174d">sin x = 1</strong><br>1️⃣ Найди <strong>1 на оси Y</strong> 2️⃣ Линия y=1 касается круга в <strong>одной точке</strong> — самой верхней',ans:[90],c:SIN,t:'sin',v:1},
+  {d:'Реши <strong style="color:#1666e0">cos x = 0</strong><br>1️⃣ Найди <strong>0 на оси X</strong> 2️⃣ Линия x=0 = ось Y 3️⃣ Отметь пересечения сверху и снизу',ans:[90,270],c:COS,t:'cos',v:0},
+  {d:'Реши <strong style="color:#d9174d">sin x = −√2/2 ≈ −0.71</strong><br>1️⃣ Найди <strong>−0.71 на оси Y</strong> (ниже нуля) 2️⃣ Горизонтальная линия 3️⃣ Обе точки в нижней части круга',ans:[225,315],c:SIN,t:'sin',v:-0.707},
+];
+let dti=0,dpts=[],dc=SIN;
+
+function setDTask(){
+  const t=DTASKS[dti%DTASKS.length];
+  document.getElementById('draw-task-desc').innerHTML=t.d;
+  dpts=[];
+  const fb=document.getElementById('draw-feedback');fb.className='feedback';fb.textContent='';
+  renderDraw();
+}
+
+function renderDraw(){
+  const canvas=document.getElementById('draw-canvas');
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height,cx=W/2-10,cy=H/2,R=Math.min(W,H)*0.38;
+  ctx.clearRect(0,0,W,H);ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,H);
+
+  // Quadrant backgrounds
+  ctx.globalAlpha=0.03;
+  ctx.fillStyle='#ff0000';ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,0,-Math.PI/2,true);ctx.fill();
+  ctx.fillStyle='#0000ff';ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,-Math.PI/2,-Math.PI,true);ctx.fill();
+  ctx.fillStyle='#ff0000';ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,Math.PI,Math.PI/2,true);ctx.fill();
+  ctx.fillStyle='#0000ff';ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,Math.PI/2,0,true);ctx.fill();
+  ctx.globalAlpha=1;
+
+  // quadrant labels
+  ctx.fillStyle='rgba(26,35,64,0.1)';ctx.font='bold 16px Mulish';
+  ctx.fillText('I',cx+R*0.55,cy-R*0.55);ctx.fillText('II',cx-R*0.65,cy-R*0.55);
+  ctx.fillText('III',cx-R*0.7,cy+R*0.62);ctx.fillText('IV',cx+R*0.5,cy+R*0.62);
+
+  // Tick marks
+  [0,30,45,60,90,120,135,150,180,210,225,240,270,300,315,330].forEach(deg=>{
+    const a=D(deg),l=deg%45===0?10:5;
+    ctx.strokeStyle=deg%45===0?'rgba(26,35,64,0.25)':'rgba(26,35,64,0.12)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(cx+(R-l)*Math.cos(a),cy-(R-l)*Math.sin(a));
+    ctx.lineTo(cx+R*Math.cos(a),cy-R*Math.sin(a));ctx.stroke();
+  });
+
+  // Axes
+  ctx.strokeStyle='rgba(26,35,64,0.35)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(cx-R-24,cy);ctx.lineTo(cx+R+30,cy);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx,cy-R-24);ctx.lineTo(cx,cy+R+24);ctx.stroke();
+
+  // Axis values
+  ctx.fillStyle='rgba(26,35,64,0.45)';ctx.font='10px Mulish';
+  [{v:1,l:'1'},{v:0.5,l:'0.5'},{v:-0.5,l:'-0.5'},{v:-1,l:'-1'}].forEach(({v,l})=>{
+    const y2=cy-R*v;
+    ctx.beginPath();ctx.arc(cx,y2,2,0,τ);ctx.fillStyle='rgba(26,35,64,0.2)';ctx.fill();
+    ctx.fillStyle='rgba(26,35,64,0.45)';ctx.fillText(l,cx+8,y2+4);
+  });
+  [{v:0.5,l:'0.5'},{v:-0.5,l:'-0.5'},{v:1,l:'1'},{v:-1,l:'-1'}].forEach(({v,l})=>{
+    const x2=cx+R*v;
+    ctx.beginPath();ctx.arc(x2,cy,2,0,τ);ctx.fillStyle='rgba(26,35,64,0.2)';ctx.fill();
+    ctx.fillStyle='rgba(26,35,64,0.45)';ctx.fillText(l,x2-6,cy+14);
+  });
+  ctx.fillText('0',cx+4,cy+14);
+
+  // Circle
+  ctx.beginPath();ctx.arc(cx,cy,R,0,τ);
+  ctx.strokeStyle='rgba(26,35,64,0.3)';ctx.lineWidth=2.5;ctx.stroke();
+
+  // Angle labels
+  ctx.fillStyle='rgba(26,35,64,0.38)';ctx.font='9px Mulish';
+  [{d:0,l:'0°'},{d:30,l:'30°'},{d:45,l:'45°'},{d:60,l:'60°'},{d:90,l:'90°'},
+   {d:120,l:'120°'},{d:135,l:'135°'},{d:150,l:'150°'},{d:180,l:'180°'},
+   {d:210,l:'210°'},{d:225,l:'225°'},{d:240,l:'240°'},{d:270,l:'270°'},
+   {d:300,l:'300°'},{d:315,l:'315°'},{d:330,l:'330°'}].forEach(({d,l})=>{
+    const a=D(d);
+    ctx.fillText(l,cx+(R+20)*Math.cos(a)-10,cy-(R+20)*Math.sin(a)+4);
+  });
+
+  // Task guideline
+  const t=DTASKS[dti%DTASKS.length];
+  if(t.t==='sin'){
+    const gy=cy-R*t.v;
+    ctx.strokeStyle=SIN+'55';ctx.lineWidth=2;ctx.setLineDash([6,4]);
+    ctx.beginPath();ctx.moveTo(cx-R-18,gy);ctx.lineTo(cx+R+18,gy);ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath();ctx.arc(cx,gy,5,0,τ);ctx.fillStyle=SIN+'88';ctx.fill();
+    ctx.fillStyle=SIN;ctx.font='bold 11px Mulish';
+    ctx.fillText(`y = ${t.v.toFixed(2)}`,cx+R+4,gy+4);
+  }else if(t.t==='cos'){
+    const gx=cx+R*t.v;
+    ctx.strokeStyle=COS+'55';ctx.lineWidth=2;ctx.setLineDash([6,4]);
+    ctx.beginPath();ctx.moveTo(gx,cy-R-18);ctx.lineTo(gx,cy+R+18);ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath();ctx.arc(gx,cy,5,0,τ);ctx.fillStyle=COS+'88';ctx.fill();
+    ctx.fillStyle=COS;ctx.font='bold 11px Mulish';
+    ctx.fillText(`x = ${t.v.toFixed(2)}`,gx+4,cy+R+18);
+  }
+
+  // Draw user points with connecting lines
+  if(dpts.length>1){
+    ctx.beginPath();ctx.moveTo(dpts[0].px,dpts[0].py);
+    for(let i=1;i<dpts.length;i++)ctx.lineTo(dpts[i].px,dpts[i].py);
+    ctx.strokeStyle=dpts[0].c;ctx.lineWidth=2;ctx.setLineDash([]);ctx.stroke();
+  }
+  dpts.forEach(pt=>{
+    ctx.strokeStyle=pt.c+'60';ctx.lineWidth=1.5;ctx.setLineDash([3,4]);
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(pt.px,pt.py);ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath();ctx.arc(pt.px,pt.py,9,0,τ);ctx.fillStyle=pt.c;ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle=pt.c;ctx.font='bold 12px Mulish';
+    const lx=pt.px+(pt.px-cx>0?12:-46),ly=pt.py+(pt.py-cy>0?20:-10);
+    ctx.fillText(nd(pt.deg),lx,ly);
+  });
+  ctx.beginPath();ctx.arc(cx,cy,4,0,τ);ctx.fillStyle='rgba(26,35,64,0.5)';ctx.fill();
+}
+
+document.getElementById('draw-canvas').addEventListener('click',function(e){
+  const rect=this.getBoundingClientRect();
+  const sx=this.width/rect.width,sy=this.height/rect.height;
+  const ex=(e.clientX-rect.left)*sx,ey=(e.clientY-rect.top)*sy;
+  const W=this.width,H=this.height,cx=W/2-10,cy=H/2,R=Math.min(W,H)*0.38;
+  const dist=Math.sqrt((ex-cx)**2+(ey-cy)**2);
+  if(dist<R*0.35||dist>R*1.65)return;
+  const rawDeg=(((-Math.atan2(ey-cy,ex-cx)*180/Math.PI)%360)+360)%360;
+  const snapped=Math.round(rawDeg/15)*15;
+  const a=D(snapped);
+  dpts.push({px:cx+R*Math.cos(a),py:cy-R*Math.sin(a),deg:snapped,c:dc});
+  renderDraw();
+});
+
+document.getElementById('clear-btn').addEventListener('click',()=>{
+  dpts=[];renderDraw();
+  const fb=document.getElementById('draw-feedback');fb.className='feedback';fb.textContent='';
+});
+document.getElementById('next-task-btn').addEventListener('click',()=>{dti++;dpts=[];setDTask();});
+document.getElementById('show-ans-btn').addEventListener('click',()=>{
+  const t=DTASKS[dti%DTASKS.length];
+  const W=document.getElementById('draw-canvas').width,H=document.getElementById('draw-canvas').height;
+  const cx=W/2-10,cy=H/2,R=Math.min(W,H)*0.38;
+  dpts=t.ans.map(deg=>{
+    const a=D(deg);return{px:cx+R*Math.cos(a),py:cy-R*Math.sin(a),deg,c:COT};
+  });
+  renderDraw();
+  const fb=document.getElementById('draw-feedback');
+  fb.className='feedback ok show';
+  fb.textContent='✅ Правильные углы: '+t.ans.map(d=>nd(d)+' ('+d+'°)').join(' и ');
+});
+
+document.querySelectorAll('.color-sw').forEach(sw=>{
+  sw.addEventListener('click',function(){
+    document.querySelectorAll('.color-sw').forEach(s=>s.classList.remove('active'));
+    this.classList.add('active');dc=this.dataset.color;
+  });
+});
+
+// INIT
+window.addEventListener('load',()=>{
+  drawHeroCircle();
+  drawConceptCircle();
+  setupSlider('sin-slider','sin-circle','sin','sin-av','sin-val','sin-sol',sinCb);
+  setupSlider('cos-slider','cos-circle','cos','cos-av','cos-val','cos-sol',cosCb);
+  setupSlider('tan-slider','tan-circle','tan','tan-av','tan-val','tan-sol',tanCb);
+  setupSlider('cot-slider','cot-circle','cot','cot-av','cot-val','cot-sol',cotCb);
+  buildEx();loadQ();setDTask();
+});
+</script>
+</body>
+</html>
